@@ -32,13 +32,13 @@ stacks:
           AZ: eu-west-2a
           Cidr: 10.0.2.0/24
           Tags:
-            - Name: ${namespace}-private-web-eu-west-2a
+            - Name: ${namespace}-private-app-eu-west-2a
         - Tier: app
           Type: private
           AZ: eu-west-2b
           Cidr: 10.0.3.0/24
           Tags:
-            - Name: ${namespace}-private-web-eu-west-2b
+            - Name: ${namespace}-private-app-eu-west-2b
 
   - name: s3-endpoint
     class_path: endpoint.Endpoint
@@ -49,3 +49,14 @@ stacks:
         - ${subnets::WebRouteTableId}
         - ${subnets::AppRouteTableEuWest2aId}
         - ${subnets::AppRouteTableEuWest2bId}
+
+  - name: nat
+    class_path: nat.NatGW
+    variables:
+      PublicSubnetIds:
+        - ${subnets::WebSubnetEuWest2aId}
+        - ${subnets::WebSubnetEuWest2bId}
+      PrivateRouteTableIds:
+        - ${subnets::AppRouteTableEuWest2aId}
+        - ${subnets::AppRouteTableEuWest2bId}
+      HighAvailability: True

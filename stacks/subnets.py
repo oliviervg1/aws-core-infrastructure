@@ -87,6 +87,13 @@ class Subnets(Blueprint):
         )
         self.resources[subnet_logical_id] = subnet
 
+        subnet_output_logical_id = "{0}Id".format(subnet_logical_id)
+        self.outputs[subnet_logical_id] = Output(
+            subnet_output_logical_id,
+            Description="Subnet ID",
+            Value=Ref(subnet)
+        )
+
         subnet_rt_assoc_logical_id = "{0}RtbAssociation{1}".format(
             Tier.capitalize(), self.to_camel_case(AZ)
         )
