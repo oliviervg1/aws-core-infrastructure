@@ -1,4 +1,4 @@
-from troposphere import Ref
+from troposphere import Ref, Output
 from troposphere.ec2 import RouteTable, Route
 from troposphere.ec2 import Subnet, SubnetRouteTableAssociation
 from troposphere.ec2 import Tag
@@ -57,6 +57,13 @@ class Subnets(Blueprint):
                 RouteTableId=Ref(route_table)
             )
 
+        rt_output_logical_id = "{0}Id".format(rt_logical_id)
+        self.outputs[rt_output_logical_id] = Output(
+            rt_output_logical_id,
+            Description="Route Table ID",
+            Value=Ref(route_table)
+        )
+
         return rt_logical_id
 
     def add_subnet(
@@ -93,7 +100,9 @@ class Subnets(Blueprint):
     def create_template(self):
         variables = self.get_variables()
         self.resources = {}
+        self.outputs = {}
         for subnet in variables["Subnets"]:
             rt_logical_id = self.add_route_table(**subnet)
             self.add_subnet(rt_logical_id, **subnet)
         self.template.add_resource(self.resources.values())
+        self.template.add_output(self.outputs.values())

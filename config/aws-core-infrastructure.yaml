@@ -39,3 +39,13 @@ stacks:
           Cidr: 10.0.3.0/24
           Tags:
             - Name: ${namespace}-private-web-eu-west-2b
+
+  - name: s3-endpoint
+    class_path: endpoint.Endpoint
+    variables:
+      VpcId: ${vpc::VpcId}
+      Service: s3
+      RouteTableIds:
+        - ${subnets::WebRouteTableId}
+        - ${subnets::AppRouteTableEuWest2aId}
+        - ${subnets::AppRouteTableEuWest2bId}
