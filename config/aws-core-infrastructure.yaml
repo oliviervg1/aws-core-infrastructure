@@ -1,0 +1,41 @@
+stacker_bucket: oliviervg-cloudformation
+sys_path: ./stacks/
+
+stacks:
+  - name: vpc
+    class_path: vpc.VPC
+    variables:
+      VpcCidr: 10.0.0.0/16
+      Tags:
+        - Name: ${namespace}
+
+  - name: subnets
+    class_path: subnets.Subnets
+    variables:
+      VpcId: ${vpc::VpcId}
+      IgwId: ${vpc::IgwId}
+      Subnets:
+        - Tier: web
+          Type: public
+          AZ: eu-west-2a
+          Cidr: 10.0.0.0/24
+          Tags:
+            - Name: ${namespace}-public-web-eu-west-2a
+        - Tier: web
+          Type: public
+          AZ: eu-west-2b
+          Cidr: 10.0.1.0/24
+          Tags:
+            - Name: ${namespace}-public-web-eu-west-2b
+        - Tier: app
+          Type: private
+          AZ: eu-west-2a
+          Cidr: 10.0.2.0/24
+          Tags:
+            - Name: ${namespace}-private-web-eu-west-2a
+        - Tier: app
+          Type: private
+          AZ: eu-west-2b
+          Cidr: 10.0.3.0/24
+          Tags:
+            - Name: ${namespace}-private-web-eu-west-2b
