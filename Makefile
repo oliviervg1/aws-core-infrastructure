@@ -18,6 +18,6 @@ infrastructure: requirements lint
 	. env/bin/activate && stacker build \
 		-t \
 		-r eu-west-2 \
-		-e namespace=streisand \
+		-e namespace=kubernetes \
 		config/aws-core-infrastructure.env \
 		config/aws-core-infrastructure.yaml

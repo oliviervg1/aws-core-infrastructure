@@ -15,30 +15,30 @@ stacks:
       VpcId: ${vpc::VpcId}
       IgwId: ${vpc::IgwId}
       Subnets:
-        - Tier: web
+        - Tier: public
           Type: public
           AZ: eu-west-2a
           Cidr: 10.0.0.0/24
           Tags:
-            - Name: ${namespace}-public-web-eu-west-2a
-        - Tier: web
+            - Name: ${namespace}-public-eu-west-2a
+        - Tier: public
           Type: public
           AZ: eu-west-2b
           Cidr: 10.0.1.0/24
           Tags:
-            - Name: ${namespace}-public-web-eu-west-2b
-        - Tier: app
+            - Name: ${namespace}-public-eu-west-2b
+        - Tier: private
           Type: private
           AZ: eu-west-2a
           Cidr: 10.0.2.0/24
           Tags:
-            - Name: ${namespace}-private-app-eu-west-2a
-        - Tier: app
+            - Name: ${namespace}-private-eu-west-2a
+        - Tier: private
           Type: private
           AZ: eu-west-2b
           Cidr: 10.0.3.0/24
           Tags:
-            - Name: ${namespace}-private-app-eu-west-2b
+            - Name: ${namespace}-private-eu-west-2b
 
   - name: s3-endpoint
     class_path: endpoint.Endpoint
@@ -46,17 +46,17 @@ stacks:
       VpcId: ${vpc::VpcId}
       Service: s3
       RouteTableIds:
-        - ${subnets::WebRouteTableId}
-        - ${subnets::AppRouteTableEuWest2aId}
-        - ${subnets::AppRouteTableEuWest2bId}
+        - ${subnets::PublicRouteTableId}
+        - ${subnets::PrivateRouteTableEuWest2aId}
+        - ${subnets::PrivateRouteTableEuWest2bId}
 
   - name: nat
     class_path: nat.NatGW
     variables:
       PublicSubnetIds:
-        - ${subnets::WebSubnetEuWest2aId}
-        - ${subnets::WebSubnetEuWest2bId}
+        - ${subnets::PublicSubnetEuWest2aId}
+        - ${subnets::PublicSubnetEuWest2bId}
       PrivateRouteTableIds:
-        - ${subnets::AppRouteTableEuWest2aId}
-        - ${subnets::AppRouteTableEuWest2bId}
+        - ${subnets::PrivateRouteTableEuWest2aId}
+        - ${subnets::PrivateRouteTableEuWest2bId}
       HighAvailability: True
