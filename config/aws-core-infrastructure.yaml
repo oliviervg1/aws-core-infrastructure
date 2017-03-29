@@ -43,20 +43,20 @@ stacks:
   - name: s3-endpoint
     class_path: endpoint.Endpoint
     variables:
-      VpcId: ${vpc::VpcId}
+      VpcId: ${output vpc::VpcId}
       Service: s3
       RouteTableIds:
-        - ${subnets::PublicRouteTableId}
-        - ${subnets::PrivateRouteTableEuWest2aId}
-        - ${subnets::PrivateRouteTableEuWest2bId}
+        - ${output subnets::PublicRouteTableId}
+        - ${output subnets::PrivateRouteTableEuWest2aId}
+        - ${output subnets::PrivateRouteTableEuWest2bId}
 
   - name: nat
     class_path: nat.NatGW
     variables:
       PublicSubnetIds:
-        - ${subnets::PublicSubnetEuWest2aId}
-        - ${subnets::PublicSubnetEuWest2bId}
+        - ${output subnets::PublicSubnetEuWest2aId}
+        - ${output subnets::PublicSubnetEuWest2bId}
       PrivateRouteTableIds:
-        - ${subnets::PrivateRouteTableEuWest2aId}
-        - ${subnets::PrivateRouteTableEuWest2bId}
-      HighAvailability: True
+        - ${output subnets::PrivateRouteTableEuWest2aId}
+        - ${output subnets::PrivateRouteTableEuWest2bId}
+      HighAvailability: False
