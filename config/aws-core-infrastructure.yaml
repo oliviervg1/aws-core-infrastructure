@@ -12,8 +12,8 @@ stacks:
   - name: subnets
     class_path: subnets.Subnets
     variables:
-      VpcId: ${vpc::VpcId}
-      IgwId: ${vpc::IgwId}
+      VpcId: ${output vpc::VpcId}
+      IgwId: ${output vpc::IgwId}
       Subnets:
         - Tier: public
           Type: public
@@ -52,6 +52,7 @@ stacks:
 
   - name: nat
     class_path: nat.NatGW
+    enabled: false
     variables:
       PublicSubnetIds:
         - ${output subnets::PublicSubnetEuWest2aId}
