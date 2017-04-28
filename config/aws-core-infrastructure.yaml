@@ -7,7 +7,7 @@ stacks:
     variables:
       VpcCidr: 10.0.0.0/16
       Tags:
-        - Name: ${namespace}
+        Name: ${namespace}
 
   - name: subnets
     class_path: subnets.Subnets
@@ -20,25 +20,25 @@ stacks:
           AZ: eu-west-2a
           Cidr: 10.0.0.0/24
           Tags:
-            - Name: ${namespace}-public-eu-west-2a
+            Name: ${namespace}-public-eu-west-2a
         - Tier: public
           Type: public
           AZ: eu-west-2b
           Cidr: 10.0.1.0/24
           Tags:
-            - Name: ${namespace}-public-eu-west-2b
+            Name: ${namespace}-public-eu-west-2b
         - Tier: private
           Type: private
           AZ: eu-west-2a
           Cidr: 10.0.2.0/24
           Tags:
-            - Name: ${namespace}-private-eu-west-2a
+            Name: ${namespace}-private-eu-west-2a
         - Tier: private
           Type: private
           AZ: eu-west-2b
           Cidr: 10.0.3.0/24
           Tags:
-            - Name: ${namespace}-private-eu-west-2b
+            Name: ${namespace}-private-eu-west-2b
 
   - name: s3-endpoint
     class_path: endpoint.Endpoint

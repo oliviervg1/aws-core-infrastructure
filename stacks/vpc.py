@@ -26,8 +26,8 @@ class VPC(Blueprint):
             EnableDnsSupport=True,
             EnableDnsHostnames=True,
             Tags=[
-                Tag(tag.keys()[0], tag.values()[0])
-                for tag in variables["Tags"]
+                Tag(key, value)
+                for key, value in variables["Tags"].iteritems()
             ]
         ))
 
@@ -43,8 +43,8 @@ class VPC(Blueprint):
             "InternetGateway",
             DependsOn="VPC",
             Tags=[
-                Tag(tag.keys()[0], tag.values()[0])
-                for tag in variables["Tags"]
+                Tag(key, value)
+                for key, value in variables["Tags"].iteritems()
             ]
         ))
 
