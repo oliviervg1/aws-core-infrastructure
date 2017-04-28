@@ -13,7 +13,7 @@ class VPC(Blueprint):
             "type": str
         },
         "Tags": {
-            "type": list
+            "type": dict
         }
     }
 

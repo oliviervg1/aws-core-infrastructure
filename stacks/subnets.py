@@ -81,9 +81,7 @@ class Subnets(Blueprint):
             AvailabilityZone=AZ,
             VpcId=variables["VpcId"],
             MapPublicIpOnLaunch=True if Type == "public" else False,
-            Tags=[
-                Tag(tag.keys()[0], tag.values()[0]) for tag in Tags
-            ]
+            Tags=[Tag(key, value) for key, value in Tags.iteritems()]
         )
         self.resources[subnet_logical_id] = subnet
 
